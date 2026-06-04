@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.church.homepage.mapper.MemberMapper">
+
+    <insert id="insertMember" parameterType="com.church.homepage.dto.MemberDTO">
+        INSERT INTO MEMBER (
+            IDX, 
+            USER_ID, 
+            USER_PWD, 
+            USER_NAME, 
+            EMAIL, 
+            POSITION, 
+            REG_DATE
+        ) VALUES (
+            MEMBER_SEQUENCE.NEXTVAL,
+            #{user_id},
+            #{user_pwd},
+            #{user_name},
+            #{email},
+            #{position},
+            SYSDATE
+        )
+    </insert>
+<select id="checkId" parameterType="string" resultType="int">
+SELECT COUNT(*) FROM MEMBER WHERE USER_ID=#{user_id}
+</select>
+<select id="loginCheck" resultType="com.church.homepage.dto.MemberDTO">
+SELECT * FROM MEMBER WHERE USER_ID=#{user_id} AND USER_PWD=#{user_pwd}
+</select>
+</mapper>
