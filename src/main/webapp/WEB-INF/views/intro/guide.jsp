@@ -4,7 +4,20 @@
 <head>
 <meta charset="UTF-8">
 <title>시설 안내</title>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
 <style>
+	body { margin: 0; padding: 0; }
+	/* 본문이 헤더 바로 밑에 붙지 않게 적당한 간격만 줌 */
+        .content-container {
+            max-width: 1200px;
+            margin: 40px auto; /* 위아래 여백을 40px로 통일 */
+            padding: 0 20px;
+        }
+        
+        h2 { margin-bottom: 20px; color: #333; }
+        
+        /* 기존 시설 안내 표 스타일 (이미 가지고 계신 스타일 추가) */
+        .facility-table { width: 100%; border-collapse: collapse; }
     .hj-guide-wrapper { width: 100%; max-width: 1100px; margin: 40px auto; padding: 0 20px; box-sizing: border-box; }
     .hj-guide-tabs { display: grid; grid-template-columns: repeat(3, 1fr); border: 1px solid #ddd; margin-bottom: 20px; }
     .hj-guide-tab-btn { padding: 15px; border: none; cursor: pointer; background: #fff; border-right: 1px solid #ddd; border-bottom: 1px solid #ddd; font-weight: bold; }
@@ -21,8 +34,8 @@
 </style>
 </head>
 <body>
-<div class="hj-guide-wrapper">
     <jsp:include page="../header.jsp" />
+<div class="hj-guide-wrapper">
 
     <h2>시설 안내</h2>
     <div class="hj-guide-tabs">

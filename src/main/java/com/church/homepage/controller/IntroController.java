@@ -25,4 +25,8 @@ public class IntroController {
 	public String guidePage() {
 		return "intro/guide";
 	}
+	@GetMapping("/intro/location")
+	public String locationPage() {
+		return "intro/location";
+	}
 }
