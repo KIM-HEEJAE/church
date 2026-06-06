@@ -17,9 +17,9 @@ import jakarta.servlet.http.HttpSession;
 public class MainController {
 @Autowired
 	private MemberService memberService;
-    @GetMapping("/main") // 브라우저에 /main을 입력하면 이 메서드가 실행됨
+    @GetMapping("/") 
     public String mainPage() {
-        return "main"; // WEB-INF/views/main.jsp 파일을 찾아가서 열어라!
+        return "main"; 
     }
     @GetMapping("/login")
     public String login() {
@@ -51,8 +51,7 @@ public class MainController {
     	MemberDTO dto = memberService.loginCheck(user_id,user_pwd);
     	if (dto != null) {
         	session.setAttribute("member",dto);
-        	System.out.println("성공");
-        	return "redirect:/main";
+        	return "redirect:/";
     	}else {
     		rttr.addFlashAttribute("error", "아이디 또는 비밀번호가 일치하지 않습니다.");
     		return "redirect:/login";
