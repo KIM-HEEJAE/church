@@ -185,3 +185,41 @@
     .footer-right a:hover { 
         color: #ffffff; /* 마우스 올리면 하얗게 하이라이트 */
     }
+  /* 유치부 배너 (깔끔한 보통 사이즈) */
+.grade-banner {
+    background-color: #3b7491;
+    color: white;
+    padding: 25px; /* 여백을 줄임 */
+    border-radius: 6px;
+    margin-bottom: 20px;
+}
+
+.banner-title h2 { 
+    font-size: 24px; /* 글자 크기 조정 */
+    margin: 5px 0 15px 0; 
+}
+
+.info-grid {
+    display: flex;
+    justify-content: flex-start; /* 왼쪽 정렬로 깔끔하게 */
+    gap: 30px; /* 항목 사이 간격만 유지 */
+    padding-top: 15px;
+    border-top: 1px solid rgba(255,255,255,0.3);
+}
+
+.info-item {
+    font-size: 15px; /* 보통 사이즈 글꼴 */
+    font-weight: normal;
+}
+
+/* 조직표 (보통 크기 테이블) */
+.org-table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+.org-table td { padding: 10px; border-bottom: 1px solid #ddd; }
+.org-table .label { 
+    width: 120px; 
+    background: #f4f4f4; 
+    color: #333; 
+    font-weight: bold; 
+    text-align: left; /* 왼쪽 정렬 */
+    padding-left: 10px;
+}

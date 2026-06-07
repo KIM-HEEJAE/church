@@ -29,4 +29,20 @@ public class IntroController {
 	public String locationPage() {
 		return "intro/location";
 	}
+	@GetMapping("/intro/child")
+	public String childPage() {
+		return "intro/child";
+	}
+	@GetMapping("/intro/student")
+	public String studentPage() {
+		return "intro/student";
+	}
+	@GetMapping("/intro/young")
+	public String youngPage() {
+		return "intro/young";
+	}
+	@GetMapping("/intro/adult")
+	public String adultPage() {
+		return "intro/adult";
+	}
 }

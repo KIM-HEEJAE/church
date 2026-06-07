@@ -67,10 +67,10 @@
                 <li class="dropdown-item">
                     <a href="/intro/grade">교회학교</a>
                     <ul class="submenu">
-                        <li><a href="/intro/grade">유치부</a></li>
-                        <li><a href="/intro/grade">아동부</a></li>
-                        <li><a href="/intro/grade">학생부</a></li>
-                        <li><a href="/intro/grade">청년부</a></li>                              
+                        <li><a href="/intro/young">유치부</a></li>
+                        <li><a href="/intro/child">아동부</a></li>
+                        <li><a href="/intro/student">학생부</a></li>
+                        <li><a href="/intro/adult">청년부</a></li>                              
                     </ul>
                 </li>
                 <!-- 5. 찬양대 대메뉴 클릭 시 -> /intro/choir(찬양대 안내)로 변경 -->
