@@ -16,7 +16,7 @@
             </span>
             <a href="/logout" class="btn-logout">로그아웃</a>
         <% } %>
-
+			<a href="/mypage" class="mypage">마이페이지</a>
         <a href="#none">문자</a>
         <a href="#none">카페</a>
         <a href="#none">일정</a>

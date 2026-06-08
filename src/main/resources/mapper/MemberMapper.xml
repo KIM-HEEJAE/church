@@ -38,4 +38,20 @@ SELECT * FROM MEMBER WHERE USER_ID=#{user_id} AND USER_PWD=#{user_pwd}
         UPDATE MEMBER SET USER_PWD = #{tempPwd} 
         WHERE USER_ID = #{user_id}
     </update>
+    <select id="getMemberInfo" resultType="com.church.homepage.dto.MemberDTO">
+    SELECT * FROM MEMBER WHERE USER_ID = #{user_id}
+    </select>
+    <update id="updateMember" parameterType="com.church.homepage.dto.MemberDTO">
+    UPDATE MEMBER SET 
+        USER_NAME = #{user_name}, 
+        USER_PWD = #{user_pwd},
+        EMAIL = #{email},
+        POSITION = #{position},
+        IMG = #{img}  WHERE USER_ID = #{user_id}
+</update>
+<update id="updateImg">
+    UPDATE MEMBER 
+    SET IMG = #{param2} 
+    WHERE USER_ID = #{param1}
+</update>
 </mapper>

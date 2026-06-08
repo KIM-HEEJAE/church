@@ -57,5 +57,18 @@ public class MemberService {
 	    } 
 	    return false; 
 	}
+	public MemberDTO getMemberInfo(String user_id) {
+		return membermapper.getMemberInfo(user_id);
+	}
+
+	public void updateMember(MemberDTO dto) {
+		// TODO Auto-generated method stub
+		 membermapper.updateMember(dto);
+	}
+
+	public void updateImg(String user_id, String img) {
+		// TODO Auto-generated method stub
+		membermapper.updateImg(user_id, img);
+	}
 	 
 }

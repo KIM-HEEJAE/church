@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.church.homepage.dto.MemberDTO;
 import com.church.homepage.service.MemberService;
 
+import jakarta.servlet.http.HttpSession;
+
 @Controller
 @RequestMapping("/member")
 public class MemberController {
@@ -59,4 +61,13 @@ public class MemberController {
         return isSent ? "success" : "fail";
     	
     }
-}
+    @PostMapping("/updateAction")
+    public String updateAction(MemberDTO dto , HttpSession session) {
+    	if(session.getAttribute("loginId")==null) {
+    		return "redirect:/login";
+    	}
+		memberService.updateMember(dto);
+		return "redirect:/mypage";
+    	}
+    		
+    }

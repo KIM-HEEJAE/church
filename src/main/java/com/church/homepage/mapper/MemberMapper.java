@@ -13,4 +13,6 @@ public interface MemberMapper {
 		String findIdByNameAndBirth(@Param("user_name") String user_name, @Param("birth_date") String birth_date);	
 		MemberDTO checkUser(@Param("user_id") String user_id, @Param("email") String email);
 		void updatePassword(@Param("user_id") String user_id, @Param("tempPwd") String tempPwd);
-}
+		MemberDTO getMemberInfo(String user_id);
+		void updateMember(MemberDTO dto);
+		void updateImg(@Param("user_id") String user_id, @Param("img") String img);}

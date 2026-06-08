@@ -17,4 +17,5 @@ public class MemberDTO {
 	private String position;
 	private Date reg_date;
 	private Date birth_date;
+	private String img;
 }
