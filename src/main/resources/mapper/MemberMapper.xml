@@ -5,22 +5,20 @@
 
     <insert id="insertMember" parameterType="com.church.homepage.dto.MemberDTO">
         INSERT INTO MEMBER (
-            IDX, 
-            USER_ID, 
-            USER_PWD, 
-            USER_NAME, 
-            EMAIL, 
-            POSITION, 
-            REG_DATE
-        ) VALUES (
-            MEMBER_SEQUENCE.NEXTVAL,
-            #{user_id},
-            #{user_pwd},
-            #{user_name},
-            #{email},
-            #{position},
-            SYSDATE
-        )
+        IDX, 
+        USER_ID, 
+        USER_PWD, 
+        USER_NAME, 
+        EMAIL, 
+        POSITION, 
+        REG_DATE,      BIRTH_DATE     ) VALUES (
+        MEMBER_SEQUENCE.NEXTVAL,
+        #{user_id},
+        #{user_pwd},
+        #{user_name},
+        #{email},
+        #{position},
+        SYSDATE,       #{birth_date, jdbcType=DATE}  )
     </insert>
 <select id="checkId" parameterType="string" resultType="int">
 SELECT COUNT(*) FROM MEMBER WHERE USER_ID=#{user_id}
@@ -28,4 +26,16 @@ SELECT COUNT(*) FROM MEMBER WHERE USER_ID=#{user_id}
 <select id="loginCheck" resultType="com.church.homepage.dto.MemberDTO">
 SELECT * FROM MEMBER WHERE USER_ID=#{user_id} AND USER_PWD=#{user_pwd}
 </select>
+<select id="findIdByNameAndBirth" parameterType="map" resultType="string">
+	SELECT USER_ID FROM MEMBER WHERE USER_NAME=#{user_name} AND BIRTH_DATE=TO_DATE(#{birth_date},'YYYY-MM-DD')
+</select>
+<select id="checkUser" resultType="com.church.homepage.dto.MemberDTO">
+        SELECT * FROM MEMBER 
+        WHERE USER_ID = #{user_id} AND EMAIL = #{email}
+    </select>
+
+    <update id="updatePassword">
+        UPDATE MEMBER SET USER_PWD = #{tempPwd} 
+        WHERE USER_ID = #{user_id}
+    </update>
 </mapper>

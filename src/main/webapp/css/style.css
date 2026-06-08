@@ -223,3 +223,24 @@
     text-align: left; /* 왼쪽 정렬 */
     padding-left: 10px;
 }
+.find-account-menu {
+    text-align: center;
+    margin-top: 15px;
+    font-size: 14px;
+    color: #666;
+}
+
+.find-account-menu a {
+    text-decoration: none;
+    color: #333;
+    padding: 0 10px;
+}
+
+.find-account-menu a:hover {
+    color: #1e5096;
+    text-decoration: underline;
+}
+
+.divider {
+    color: #ccc;
+}

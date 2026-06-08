@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -62,8 +63,7 @@
     <div class="join-container">
         <h2 class="join-title">⛪ 회원 등록 (회원가입)</h2>
         
-        <form action="/joincomplete" method="post" onsubmit="return validateForm()">
-            
+<form action="${pageContext.request.contextPath}/member/joincomplete" method="post" onsubmit="return validateForm()">            
             <div class="form-group">
                 <label for="memberId">아이디</label>
                 <input type="text" id="memberId" name="user_id" placeholder="사용할 아이디 입력" required>
@@ -79,9 +79,28 @@
                 <label for="name">이름</label>
                 <input type="text" id="name" name="user_name" placeholder="성도 이름 입력" required>
             </div>
-            
+            <div class="input-group">
+    <label>생년월일</label>
+    <div style="display: flex; gap: 5px;">
+        <select name="birthYear" required>
+            <c:forEach begin="1920" end="2026" var="i">
+                <option value="${i}">${i}년</option>
+            </c:forEach>
+        </select>
+        <select name="birthMonth" required>
+            <c:forEach begin="1" end="12" var="i">
+                <option value="${i}">${i < 10 ? '0' : ''}${i}월</option>
+            </c:forEach>
+        </select>
+        <select name="birthDay" required>
+            <c:forEach begin="1" end="31" var="i">
+                <option value="${i}">${i < 10 ? '0' : ''}${i}일</option>
+            </c:forEach>
+        </select>
+    </div>
+</div>
             <div class="form-group">
-                <label for="email">이메일 <span class="optional-text">(선택사항)</span></label>
+                <label for="email">이메일 <span class="optional-text"></span></label>
                 <input type="email" id="email" name="email" placeholder="hongje@naver.com">
             </div>
             
