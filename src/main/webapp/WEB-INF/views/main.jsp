@@ -236,6 +236,11 @@
 
         setInterval(nextSlide, 3000);
     </script>
-    
+    <script>
+    // 컨트롤러에서 전달받은 msg가 있다면 alert창을 띄움
+    <c:if test="${not empty msg}">
+        alert("${msg}");
+    </c:if>
+</script>
 </body>
 </html>

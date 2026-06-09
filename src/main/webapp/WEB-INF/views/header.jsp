@@ -85,9 +85,9 @@
                 </li>
                 <!-- 6. 교회앨범 대메뉴 클릭 시 -> /intro/album(교회 앨범)로 변경 -->
                 <li class="dropdown-item">
-                    <a href="/intro/album">교회앨범</a>
+                    <a href="/board/list">교회앨범</a>
                     <ul class="submenu">
-                        <li><a href="/intro/album">교회 앨범</a></li>
+                        <li><a href="/board/list">교회 앨범</a></li>
                     </ul>
                 </li>
                 <!-- 7. 교회소식 대메뉴 클릭 시 -> /intro/news(교회 소식)로 변경 -->

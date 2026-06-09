@@ -24,6 +24,7 @@
         <p>아이디: <input type="text" name="user_id" value="${dto.user_id}" readonly></p>
         <p>이름: <input type="text" name="user_name" value="${dto.user_name}"></p>
         <p>이메일: <input type="email" name="email" value="${dto.email}"></p>
+                <p>생년월일: <input type="birth_date" name="birth_date" value="${dto.birth_date}"></p>        
         <p>프로필 사진 변경: <input type="file" name="file"></p>
         <button type="submit">정보 및 사진 수정하기</button>
     </form>
