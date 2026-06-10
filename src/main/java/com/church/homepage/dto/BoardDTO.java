@@ -1,6 +1,5 @@
 package com.church.homepage.dto;
 
-import java.sql.Clob;
 import java.sql.Date;
 
 import lombok.Getter;
@@ -17,4 +16,5 @@ public class BoardDTO {
 	private String b_img;
 	private String b_writer;
 	private Date b_date;
+	private String thumbImg;
 }

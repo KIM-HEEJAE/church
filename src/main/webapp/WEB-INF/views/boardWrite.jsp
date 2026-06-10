@@ -19,7 +19,7 @@
             <textarea name="b_content" rows="10" cols="50"></textarea>
         </p>
         <p>
-            대표 사진: <input type="file" name="file">
+            대표 사진: <input type="file" name="files" multiple="multiple">
         </p>
         <button type="submit">등록하기</button>
         <button type="button" onclick="history.back()">취소</button>

@@ -15,4 +15,11 @@ public interface BoardMapper {
 	int getTotalCount(); // 추가
 	List<BoardDTO> getBoardList(PageUtil pageUtil);
 	void writeBoard(BoardDTO board);
+	void insertBoardImage(int b_no, String fileName);
+	List<String> getImagesByBno(int b_no);
+	BoardDTO getBoard(int b_no);
+	void deleteImages(int b_no);
+	void deleteBoard(int b_no);
+	void updateBoard(BoardDTO board);
+	
 }

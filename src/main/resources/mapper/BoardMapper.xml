@@ -2,13 +2,25 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.church.homepage.mapper.BoardMapper">
 
-    <select id="getBoardList" resultType="com.church.homepage.dto.BoardDTO" parameterType="page.PageUtil">
-        SELECT * FROM (
-            SELECT ROWNUM AS RNUM, B.* FROM (
-                SELECT * FROM BOARD ORDER BY B_NO DESC
-            ) B
-        ) WHERE RNUM BETWEEN #{pageBegin} AND #{pageEnd}
-    </select>
+    <resultMap id="boardResultMap" type="com.church.homepage.dto.BoardDTO">
+    <result property="b_no" column="b_no"/>
+    <result property="b_title" column="b_title"/>
+    <result property="b_writer" column="b_writer"/>
+    <result property="b_date" column="b_date"/>
+    <result property="thumbImg" column="THUMBIMG"/> </resultMap>
+
+<select id="getBoardList" resultMap="boardResultMap" parameterType="page.PageUtil">
+    SELECT * FROM (
+        SELECT ROWNUM AS RNUM, B.* FROM (
+            SELECT b.*,
+                   (SELECT img_name 
+                    FROM (SELECT img_name FROM BOARD_IMG WHERE b_no = b.b_no ORDER BY img_no ASC) 
+                    WHERE ROWNUM = 1) AS THUMBIMG
+            FROM BOARD b
+            ORDER BY B_NO DESC
+        ) B
+    ) WHERE RNUM BETWEEN #{pageBegin} AND #{pageEnd}
+</select>
 
     <select id="getTotalCount" resultType="int">
         SELECT COUNT(*) FROM BOARD
@@ -18,9 +30,50 @@
         SELECT * FROM BOARD WHERE B_NO = #{b_no}
     </select>
 
-     <insert id="insertBoard" parameterType="com.church.homepage.dto.BoardDTO">
+ <!--     <insert id="insertBoard" parameterType="com.church.homepage.dto.BoardDTO">
         INSERT INTO BOARD (B_NO, B_WRITER, B_TITLE, B_CONTENT, B_IMG, B_DATE)
         VALUES (B_SEQ.NEXTVAL, #{b_writer}, #{b_title}, #{b_content}, #{b_img}, SYSDATE)
-    </insert>
- 
+    </insert> -->
+ <insert id="insertBoardImage">
+    INSERT INTO BOARD_IMG (img_no, b_no, img_name) 
+    VALUES (IMG_SEQ.NEXTVAL, #{b_no}, #{fileName})
+</insert>
+<insert id="insertBoard" parameterType="com.church.homepage.dto.BoardDTO">
+    <selectKey keyProperty="b_no" resultType="int" order="BEFORE">
+        SELECT BOARD_SEQ.NEXTVAL FROM DUAL
+    </selectKey>
+    
+    INSERT INTO BOARD (b_no, b_title, b_content, b_writer, b_date)
+    VALUES (#{b_no}, #{b_title}, #{b_content}, #{b_writer}, SYSDATE)
+</insert>
+<select id="getImagesByBno" resultType="String">
+    SELECT img_name FROM BOARD_IMG WHERE b_no = #{b_no}
+</select>
+<select id="getBoard" parameterType="int" resultType="com.church.homepage.dto.BoardDTO">
+        SELECT * FROM BOARD WHERE b_no = #{b_no}
+    </select>
+    
+    <select id="listBoard" resultType="com.church.homepage.dto.BoardDTO">
+    SELECT b.*, 
+           (SELECT img_name 
+            FROM (SELECT img_name 
+                  FROM BOARD_IMG 
+                  WHERE b_no = b.b_no 
+                  ORDER BY img_no ASC) 
+            WHERE ROWNUM = 1) AS thumbImg 
+    FROM BOARD b
+    ORDER BY b_no DESC
+</select>
+<delete id="deleteImages" parameterType="int">
+    DELETE FROM BOARD_IMG WHERE B_NO = #{b_no}
+</delete>
+
+<delete id="deleteBoard" parameterType="int">
+    DELETE FROM BOARD WHERE B_NO = #{b_no}
+</delete>
+<update id="updateBoard" parameterType="com.church.homepage.dto.BoardDTO">
+    UPDATE BOARD 
+    SET B_TITLE = #{b_title}, B_CONTENT = #{b_content} 
+    WHERE B_NO = #{b_no}
+</update>
 </mapper>
