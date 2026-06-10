@@ -5,7 +5,11 @@
 <head>
     <title>앨범 상세 보기</title>
 </head>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
+
 <body>
+<jsp:include page="header.jsp" />
+
     <h2>${board.b_title}</h2>
     <p>작성자: ${board.b_writer} | 작성일: ${board.b_date}</p>
     

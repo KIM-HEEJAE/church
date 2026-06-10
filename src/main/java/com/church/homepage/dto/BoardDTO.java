@@ -13,7 +13,7 @@ import lombok.ToString;
 public class BoardDTO {
 	private int b_no;
 	private String b_title;
-	private Clob b_content;
+	private String b_content;
 	private String b_img;
 	private String b_writer;
 	private Date b_date;

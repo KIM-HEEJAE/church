@@ -4,7 +4,11 @@
 <head>
 <title>교회 앨범 등록</title>
 </head>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
+
 <body>
+<jsp:include page="header.jsp" />
+
     <h2>앨범 게시글 등록</h2>
     <form action="/board/writeAction" method="post" enctype="multipart/form-data">
         <p>

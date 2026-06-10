@@ -1,17 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.church.homepage.mapper.BoardMapper">
-<select id="getBoardList" resultType="com.church.homepage.dto.BoardDTO" parameterType="page.PageUtil">
-    SELECT * FROM (
-        SELECT ROWNUM AS RNUM, B.* FROM (
-            SELECT * FROM BOARD ORDER BY B_NO DESC
-        ) B
-    ) WHERE RNUM BETWEEN #{pageBegin} AND #{pageEnd}
-</select>
-<select id="getTotalCount" resultType="int">
-    SELECT COUNT(*) FROM BOARD
-</select>
-<select id="viewBoard" parameterType="int" resultType="com.church.homepage.dto.BoardDTO">
-    SELECT * FROM BOARD WHERE B_NO = #{b_no}
-</select>
-    </mapper>
+
+    <select id="getBoardList" resultType="com.church.homepage.dto.BoardDTO" parameterType="page.PageUtil">
+        SELECT * FROM (
+            SELECT ROWNUM AS RNUM, B.* FROM (
+                SELECT * FROM BOARD ORDER BY B_NO DESC
+            ) B
+        ) WHERE RNUM BETWEEN #{pageBegin} AND #{pageEnd}
+    </select>
+
+    <select id="getTotalCount" resultType="int">
+        SELECT COUNT(*) FROM BOARD
+    </select>
+
+    <select id="viewBoard" parameterType="int" resultType="com.church.homepage.dto.BoardDTO">
+        SELECT * FROM BOARD WHERE B_NO = #{b_no}
+    </select>
+
+     <insert id="insertBoard" parameterType="com.church.homepage.dto.BoardDTO">
+        INSERT INTO BOARD (B_NO, B_WRITER, B_TITLE, B_CONTENT, B_IMG, B_DATE)
+        VALUES (B_SEQ.NEXTVAL, #{b_writer}, #{b_title}, #{b_content}, #{b_img}, SYSDATE)
+    </insert>
+ 
+</mapper>

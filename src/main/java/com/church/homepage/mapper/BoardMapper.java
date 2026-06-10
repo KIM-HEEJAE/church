@@ -14,4 +14,5 @@ public interface BoardMapper {
 	void insertBoard(BoardDTO board);
 	int getTotalCount(); // 추가
 	List<BoardDTO> getBoardList(PageUtil pageUtil);
+	void writeBoard(BoardDTO board);
 }

@@ -29,5 +29,10 @@ public class BoardService {
 	public BoardDTO viewBoard(int b_no) {
         return boardMapper.viewBoard(b_no);
     }
+	public void writeBoard(BoardDTO board) {
+		// TODO Auto-generated method stub
+		boardMapper.writeBoard(board);
+		
+	}
 
 }
