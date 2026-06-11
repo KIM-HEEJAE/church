@@ -45,4 +45,8 @@ public class IntroController {
 	public String adultPage() {
 		return "intro/adult";
 	}
+	@GetMapping("/choir")
+	public String choir() {
+	    return "choir"; 
+	}
 }

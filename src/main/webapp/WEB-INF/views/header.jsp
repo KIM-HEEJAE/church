@@ -75,12 +75,12 @@
                 </li>
                 <!-- 5. 찬양대 대메뉴 클릭 시 -> /intro/choir(찬양대 안내)로 변경 -->
                 <li class="dropdown-item">
-                    <a href="/intro/choir">찬양대</a>
+                    <a href="/choir">찬양대</a>
                     <ul class="submenu">
-                        <li><a href="/intro/choir">찬양대 안내</a></li>
-                        <li><a href="/intro/grade">글로리아 성가대</a></li>
+                        <li><a href="/choir">찬양대 안내</a></li>
+<!--                         <li><a href="/intro/grade">글로리아 성가대</a></li>
                         <li><a href="/intro/grade">할렐루야 성가대</a></li>
-                        <li><a href="/intro/grade">늘찬양 성가대</a></li>   
+                        <li><a href="/intro/grade">늘찬양 성가대</a></li>    -->
                     </ul>
                 </li>
                 <!-- 6. 교회앨범 대메뉴 클릭 시 -> /intro/album(교회 앨범)로 변경 -->
