@@ -128,4 +128,5 @@ import page.PageUtil;
 		    boardService.updateBoard(board);
 		    return "redirect:/board/view?b_no=" + board.getB_no();
 		}
+		
 	}

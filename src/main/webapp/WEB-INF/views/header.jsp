@@ -52,7 +52,7 @@
                 <li class="dropdown-item">
                     <a href="/intro/time">말씀과찬양</a>
                     <ul class="submenu">
-                        <li><a href="/intro/time">주일설교</a></li>
+                        <li><a href="/sermon/list">주일설교</a></li>
                         <li><a href="/intro/people">행사영상</a></li>
                     </ul>
                 </li>
