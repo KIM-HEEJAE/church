@@ -10,5 +10,12 @@
     <select id="getDetail" resultType="com.church.homepage.dto.SermonDTO">
         SELECT * FROM SERMON WHERE S_NO = #{s_no}
     </select>
+<insert id="register" parameterType="com.church.homepage.dto.SermonDTO">
+    <selectKey keyProperty="s_no" resultType="int" order="BEFORE">
+        SELECT SERMON_SEQ.NEXTVAL FROM DUAL
+    </selectKey>
 
+    INSERT INTO SERMON (S_NO, S_TITLE, S_PREACHER, S_DATE, S_SCRIPTURE, S_VIDEO_URL)
+    VALUES (#{s_no}, #{s_title}, #{s_preacher}, SYSDATE, #{s_scripture}, #{s_video_url})
+</insert>
 </mapper>

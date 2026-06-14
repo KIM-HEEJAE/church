@@ -17,4 +17,8 @@ public class SermonService {
 	public SermonDTO getDetail(int s_no) {
 		return sermonMapper.getDetail(s_no);
 	}
+	public void register(SermonDTO sermon) {
+		// TODO Auto-generated method stub
+		sermonMapper.register(sermon);
+	}
 }

@@ -1,6 +1,8 @@
 package com.church.homepage.dto;
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -8,7 +10,7 @@ import lombok.ToString;
 @Setter
 @ToString
 public class MemberDTO {
-
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private int idx;
 	private String user_id;
 	private String user_pwd;
@@ -16,6 +18,6 @@ public class MemberDTO {
 	private String email;
 	private String position;
 	private Date reg_date;
-	private Date birth_date;
+	private String birth_date;
 	private String img;
 }

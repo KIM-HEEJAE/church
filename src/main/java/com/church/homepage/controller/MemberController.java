@@ -1,7 +1,6 @@
 package com.church.homepage.controller;
 
-import java.io.File;
-import java.util.UUID;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,9 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
 
-import com.church.homepage.dto.BoardDTO;
 import com.church.homepage.dto.MemberDTO;
 import com.church.homepage.service.MemberService;
 
@@ -68,6 +65,7 @@ public class MemberController {
     }
     @PostMapping("/updateAction")
     public String updateAction(MemberDTO dto , HttpSession session) {
+
     	if(session.getAttribute("loginId")==null) {
     		return "redirect:/login";
     	}

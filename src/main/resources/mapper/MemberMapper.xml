@@ -43,11 +43,13 @@ SELECT * FROM MEMBER WHERE USER_ID=#{user_id} AND USER_PWD=#{user_pwd}
     </select>
     <update id="updateMember" parameterType="com.church.homepage.dto.MemberDTO">
     UPDATE MEMBER SET 
-        USER_NAME = #{user_name}, 
-        USER_PWD = #{user_pwd},
-        EMAIL = #{email},
-        POSITION = #{position},
-        IMG = #{img}  WHERE USER_ID = #{user_id}
+        USER_NAME = #{user_name, jdbcType=VARCHAR}, 
+        USER_PWD = #{user_pwd, jdbcType=VARCHAR},
+        EMAIL = #{email, jdbcType=VARCHAR}
+        <if test="img != null and img != ''">
+            , IMG = #{img, jdbcType=VARCHAR}
+        </if>
+    WHERE USER_ID = #{user_id, jdbcType=VARCHAR}
 </update>
 <update id="updateImg">
     UPDATE MEMBER 

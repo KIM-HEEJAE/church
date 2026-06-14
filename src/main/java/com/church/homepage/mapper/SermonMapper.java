@@ -9,4 +9,6 @@ public interface SermonMapper {
     
     // 설교 상세정보 가져오기
     SermonDTO getDetail(int s_no);
+
+	void register(SermonDTO sermon);
 }

@@ -85,58 +85,30 @@ private BoardService boardService;
     	return "mypage";
     }
     @PostMapping("/updateProfile")
-    public String updateProfile(@RequestParam("file") MultipartFile file, HttpSession session) throws Exception {
+    public String updateProfile(MemberDTO dto, @RequestParam("file") MultipartFile file, HttpSession session) throws Exception {
+        
+        // 1. 파일이 있는 경우에만 이미지 처리
         if (!file.isEmpty()) {
             String uploadPath = "C:/work/img/";
-            
-            // 1. 원본 파일명에서 확장자(예: .jpg, .png, .webp)만 추출
             String originalName = file.getOriginalFilename();
             String extension = originalName.substring(originalName.lastIndexOf("."));
-            
-            // 2. 한글 없이 UUID + 확장자로 파일명 생성
             String fileName = UUID.randomUUID().toString() + extension;
             
-            // 3. 파일 저장
             File saveFile = new File(uploadPath, fileName);
             file.transferTo(saveFile);
             
-            // 4. DB 및 세션 업데이트
-            MemberDTO dto = (MemberDTO) session.getAttribute("member");
-            dto.setImg(fileName); 
-            memberService.updateImg(dto.getUser_id(), fileName);
-            session.setAttribute("member", dto);
+            // DTO에 파일명 저장
+            dto.setImg(fileName);
         }
+        
+        // 2. 정보 업데이트 (이미지 포함/미포함 모든 경우)
+        // 서비스에서 SQL로 모든 필드를 업데이트하도록 구현되어 있어야 합니다.
+        memberService.updateMember(dto);
+        
+        // 3. 세션 갱신 (화면에 변경된 정보 바로 반영)
+        session.setAttribute("member", dto);
+        
         return "redirect:/mypage";
     }
- // 글쓰기 페이지 진입 시 관리자 권한 확인
-	/*
-	 * @GetMapping("/board/write") public String writePage(HttpSession session,
-	 * RedirectAttributes rttr) { MemberDTO dto = (MemberDTO)
-	 * session.getAttribute("member");
-	 * 
-	 * // 권한 체크 if (dto == null || !"admin".equals(dto.getUser_id())) { // 일회성 경고
-	 * 메시지 전달 rttr.addFlashAttribute("msg", "글을 쓸 권한이 없습니다."); return "redirect:/";
-	 * // 메인으로 이동 } return "boardWrite"; }
-	 */
-	/*
-	 * @PostMapping("/board/writeAction") public String writeAction(BoardDTO board,
-	 * 
-	 * @RequestParam("file") MultipartFile file, HttpSession session) throws
-	 * Exception {
-	 * 
-	 * // 1. 관리자 권한 체크 (한 번 더 확인) MemberDTO dto = (MemberDTO)
-	 * session.getAttribute("member"); if(dto == null ||
-	 * !"admin".equals(dto.getUser_id())) { return "redirect:/"; }
-	 * 
-	 * // 2. 파일 업로드 로직 if (!file.isEmpty()) { String fileName =
-	 * UUID.randomUUID().toString() + "_" + file.getOriginalFilename(); File
-	 * saveFile = new File("C:/work/img/", fileName); file.transferTo(saveFile);
-	 * board.setB_img(fileName); }
-	 * 
-	 * // 3. 작성자 설정 board.setB_writer(dto.getUser_id());
-	 * 
-	 * // 4. 서비스 호출 boardService.insertBoard(board);
-	 * 
-	 * return "redirect:/board/list"; }
-	 */
+ 
     }
