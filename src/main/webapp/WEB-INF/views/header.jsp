@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="com.church.homepage.dto.MemberDTO" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<link rel="stylesheet" href="/css/style.css">
 <div class="top-util-bar">
     <div class="util-menu">
         <%
@@ -17,12 +18,123 @@
             <a href="/logout" class="btn-logout">로그아웃</a>
         <% } %>
 			<a href="/mypage" class="mypage">마이페이지</a>
-        <a href="#none">문자</a>
+        <a href="javascript:void(0);" onclick="checkLoginAndOpenChat()">채팅</a>
         <a href="#none">카페</a>
         <a href="#none">일정</a>
     </div>
 </div>
+<script>
+    let socket = null;
+    document.addEventListener("DOMContentLoaded", function() {
+        const inputArea = document.getElementById('chat-input');
+        
+        if (inputArea) {
+            // keypress 대신 keydown 사용 (더 정확함)
+            inputArea.addEventListener('keydown', function (e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault(); // 기본 폼 제출 동작 방지 (중복 입력 원인)
+                    sendMessage();
+                }
+            });
+        }
+    });
 
+        // ... 나머지 함수들 (connectWebSocket, sendMessage, loadChatHistory 등) ...
+   
+    // 1. 웹소켓 연결 함수
+   function connectWebSocket() {
+    if (socket === null) {
+        socket = new WebSocket("ws://" + location.host + "/chat");
+
+        socket.onopen = function() {
+            console.log("웹소켓 연결 성공!");
+        };
+
+        // 서버에서 메시지가 왔을 때 화면에 추가하는 핵심 로직
+        socket.onmessage = function(event) {
+            console.log("서버로부터 받은 메시지:", event.data); // 디버깅용
+            
+            let msgBox = document.getElementById('chat-messages');
+            let div = document.createElement('div');
+            
+            // event.data가 "[직책] 이름: 메시지" 형태일 것임
+            div.textContent = event.data; 
+            msgBox.appendChild(div);
+            
+            // 화면 스크롤 하단 고정
+            msgBox.scrollTop = msgBox.scrollHeight;
+        };
+
+        socket.onerror = function(err) {
+            console.error("웹소켓 에러:", err);
+        };
+    }
+}
+
+    // 2. 채팅창 열기
+    function checkLoginAndOpenChat() {
+        // 로그인 여부를 자바스크립트 변수로 넘겨받는 것이 더 안전합니다
+        const isLogin = <%= (loginMember != null) %>; 
+        
+        if (!isLogin) {
+            alert("로그인 후 이용 가능합니다.");
+            location.href = "/login";
+            return;
+        }
+
+        var chatWindow = document.getElementById('chat-window');
+        chatWindow.style.display = 'flex';
+        
+        loadChatHistory();
+        connectWebSocket();
+    }
+
+    // 3. 메시지 전송
+    function sendMessage() {
+    let input = document.getElementById('chat-input');
+    let message = input.value.trim();
+    
+    if(message === "") return;
+    
+    if (socket && socket.readyState === WebSocket.OPEN) {
+        socket.send(message); 
+        input.value = ""; // 입력창 비우기
+    } else {
+        alert("서버 연결이 끊겼습니다. 새로고침 후 다시 시도하세요.");
+    }
+}
+
+    // 4. 기록 불러오기
+    function loadChatHistory() {
+    fetch('/chat/history')
+        .then(res => res.json())
+        .then(data => {
+            let msgBox = document.getElementById('chat-messages');
+            msgBox.innerHTML = ""; // 기존 내용 초기화
+            
+            data.forEach(item => {
+                // 직책이 있으면 [직책] 추가, 없으면 빈 문자열
+                let pos = item.position ? "[" + item.position + "] " : "";
+                
+                // 전체 메시지 조합: [직책]이름: 메시지
+                let displayMsg = pos + item.user_name + ": " + item.message;
+                
+                let div = document.createElement('div');
+                div.textContent = displayMsg; // 텍스트로 안전하게 출력
+                msgBox.appendChild(div);
+            });
+            
+            msgBox.scrollTop = msgBox.scrollHeight; // 맨 아래로 스크롤
+        })
+        .catch(err => console.error("기록 불러오기 실패:", err));
+}
+
+    // 5. 닫기
+    function closeChat() {
+        document.getElementById('chat-window').style.display = 'none';
+    }
+   
+</script>
 <header class="main-header-container">
     <div class="header-main-content">
         
@@ -101,4 +213,19 @@
         </nav>
         
     </div>
+   
+
 </header>
+<div id="chat-window">
+    <div class="chat-header">
+        <span>교인 대화방</span>
+        <button onclick="closeChat()">X</button>
+    </div>
+    <div id="chat-messages"></div>
+    <div class="chat-input-area">
+        <input type="text" id="chat-input" placeholder="메시지 입력...">
+        <button onclick="sendMessage()">전송</button>
+    </div>
+</div>
+</body>
+</html>

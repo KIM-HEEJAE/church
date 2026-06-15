@@ -20,7 +20,7 @@
         .facility-table { width: 100%; border-collapse: collapse; }
     .hj-guide-wrapper { width: 100%; max-width: 1100px; margin: 40px auto; padding: 0 20px; box-sizing: border-box; }
     .hj-guide-tabs { display: grid; grid-template-columns: repeat(3, 1fr); border: 1px solid #ddd; margin-bottom: 20px; }
-    .hj-guide-tab-btn { padding: 15px; border: none; cursor: pointer; background: #fff; border-right: 1px solid #ddd; border-bottom: 1px solid #ddd; font-weight: bold; }
+    .hj-guide-tab-btn { padding: 15px; border: none; cursor: pointer; background: #fff; border-right: 1px solid #ddd; border-bottom: 1px solid #ddd; font-weight: bold; color: #333;}
     .hj-guide-tab-btn.hj-active { background: #1e5096; color: #fff; }
     .hj-guide-content-wrapper { display: none; gap: 30px; margin-top: 20px; }
     .hj-guide-content-wrapper.hj-active { display: flex; }
@@ -28,9 +28,9 @@
     .hj-guide-img-area img { width: 100%; display: block; margin-bottom: 10px; }
     .hj-guide-info-area { flex: 0.8; display: flex; flex-direction: column; gap: 8px; }
     .hj-guide-info-row { display: flex; border: 1px solid #eee; }
-    .hj-guide-info-label { width: 120px; font-weight: bold; padding: 10px; text-align: center; background: #f4f4f4; flex-shrink: 0; }
-    .hj-guide-info-text { padding: 10px; font-size: 14px; }
-    .hj-guide-title-bar { font-size: 20px; font-weight: bold; margin: 20px 0; padding: 10px; border-left: 5px solid #1e5096; background: #f9f9f9; }
+    .hj-guide-info-label { width: 120px; font-weight: bold; padding: 10px; text-align: center; background: #f4f4f4; flex-shrink: 0; color: #333;}
+    .hj-guide-info-text { padding: 10px; font-size: 14px; color: #333;}
+    .hj-guide-title-bar { font-size: 20px; font-weight: bold; margin: 20px 0; padding: 10px; border-left: 5px solid #1e5096; background: #f9f9f9; color: #333;}
 </style>
 </head>
 <body>

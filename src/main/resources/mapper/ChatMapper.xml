@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.church.homepage.mapper.ChatMapper">
+
+    <insert id="insertMessage" parameterType="com.church.homepage.dto.ChatDTO">
+        INSERT INTO chat_log (user_name, message, reg_date) 
+        VALUES (#{user_name}, #{message}, SYSDATE)
+    </insert>
+
+    <select id="getRecentMessages" resultType="com.church.homepage.dto.ChatDTO">
+    <![CDATA[
+    SELECT * FROM (
+        SELECT c.*, m.position 
+        FROM chat_log c 
+        LEFT JOIN member m ON c.user_name = m.user_name
+        ORDER BY c.chat_id DESC
+    ) WHERE ROWNUM <= 50
+    ORDER BY chat_id ASC
+    ]]>
+</select>
+    
+</mapper>

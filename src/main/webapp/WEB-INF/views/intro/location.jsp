@@ -20,7 +20,7 @@
     
     /* 기존 스타일들... */
     .info-table th, .info-table td { padding: 10px; border-bottom: 1px solid #ddd; text-align: left; }
-    .info-table th { width: 150px; background-color: #f9f9f9; }
+    .info-table th { width: 150px; background-color: #f9f9f9; color: #333333;}
     
     /* 제목 중앙 정렬 */
     h2 { text-align: center; margin-top: 30px; }
