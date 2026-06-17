@@ -49,4 +49,8 @@ public class IntroController {
 	public String choir() {
 	    return "choir"; 
 	}
+	@GetMapping("/intro/sunkyo")
+	public String sunkyoPage() {
+		return "intro/sunkyo";
+	}
 }
