@@ -153,7 +153,7 @@
                     <a href="/intro/greeting">교회소개</a>
                     <ul class="submenu">
                         <li><a href="/intro/hi">담임목사인사말</a></li>
-                        <li><a href="/intro/time">예배시간</a></li>
+                        <li><a href="/intro/	time">예배시간</a></li>
                         <li><a href="/intro/people">섬기는분들</a></li>
                         <li><a href="/intro/history">교회연혁</a></li>
                         <li><a href="/intro/guide">교회시설안내</a></li>
@@ -204,9 +204,9 @@
                 </li>
                 <!-- 7. 교회소식 대메뉴 클릭 시 -> /intro/news(교회 소식)로 변경 -->
                 <li class="dropdown-item">
-                    <a href="/intro/news">교회소식</a>
+                    <a href="/file/list">교회소식</a>
                     <ul class="submenu">
-                        <li><a href="/intro/news">교회 소식</a></li>
+                        <li><a href="/file/list">교회 소식</a></li>
                     </ul>
                 </li>
             </ul>

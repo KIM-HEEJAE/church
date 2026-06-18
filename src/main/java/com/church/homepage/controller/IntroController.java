@@ -53,4 +53,5 @@ public class IntroController {
 	public String sunkyoPage() {
 		return "intro/sunkyo";
 	}
+	
 }
