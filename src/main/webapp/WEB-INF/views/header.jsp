@@ -29,121 +29,98 @@
 </div>
 <script>
     let socket = null;
+
+    // 1. 엔터키 전송 이벤트 (ID 확인: chat-input)
     document.addEventListener("DOMContentLoaded", function() {
-        const inputArea = document.getElementById('chat-input');
-        
-        if (inputArea) {
-            // keypress 대신 keydown 사용 (더 정확함)
-            inputArea.addEventListener('keydown', function (e) {
-                if (e.key === 'Enter') {
-                    e.preventDefault(); // 기본 폼 제출 동작 방지 (중복 입력 원인)
-                    sendMessage();
-                }
-            });
-        }
+        document.getElementById("chat-input").addEventListener("keydown", function(event) {
+            if (event.key === "Enter") {
+                event.preventDefault();
+                sendMessage();
+            }
+        });
     });
 
-        // ... 나머지 함수들 (connectWebSocket, sendMessage, loadChatHistory 등) ...
-   
-    // 1. 웹소켓 연결 함수
-   function connectWebSocket() {
-    // 이미 연결된 상태라면 중복 연결 방지
-    if (socket !== null && socket.readyState === WebSocket.OPEN) {
-        return;
-    }
+    // 2. 웹소켓 연결
+    function connectWebSocket() {
+        if (socket !== null && socket.readyState === WebSocket.OPEN) return;
 
-    socket = new WebSocket("ws://" + location.host + "/chat");
+        socket = new WebSocket("ws://" + location.host + "/chat");
 
-    socket.onopen = function() {
-        console.log("웹소켓 연결 성공!");
-    };
+        socket.onopen = function() {
+            console.log("웹소켓 연결 성공!");
+        };
 
-    socket.onmessage = function(event) {
-        let msgBox = document.getElementById('chat-messages');
-        let div = document.createElement('div');
-        div.textContent = event.data; 
-        msgBox.appendChild(div);
-        msgBox.scrollTop = msgBox.scrollHeight;
-    };
-
-    // 소켓이 닫히면 socket 변수를 null로 초기화 (중요!)
-    socket.onclose = function() {
-        socket = null;
-    };
-
-    socket.onerror = function(err) {
-        console.error("웹소켓 에러:", err);
-    };
-}
-    // 2. 채팅창 열기
-   async function checkLoginAndOpenChat() {
-    const isLogin = <%=(loginMember != null)%>; 
-    
-    if (!isLogin) {
-        alert("로그인 후 이용 가능합니다.");
-        location.href = "/login";
-        return;
-    }
-
-    var chatWindow = document.getElementById('chat-window');
-    
-    // [중요!] 이미 채팅창이 보여지고 있다면, 다시 불러오거나 연결하지 않고 함수 종료
-    if (chatWindow.style.display === 'flex') {
-        return; 
-    }
-
-    chatWindow.style.display = 'flex';
-    
-    // 연결되어 있지 않을 때만 로드 및 연결
-    if (socket === null || socket.readyState !== WebSocket.OPEN) {
-        await loadChatHistory(); // DB 기록 불러오기
-        connectWebSocket();      // 웹소켓 연결
-    }
-}
-    // 3. 메시지 전송
-    function sendMessage() {
-    let input = document.getElementById('chat-input');
-    let message = input.value.trim();
-    
-    if(message === "") return;
-    
-    if (socket && socket.readyState === WebSocket.OPEN) {
-        socket.send(message); 
-        input.value = ""; // 입력창 비우기
-    } else {
-        alert("서버 연결이 끊겼습니다. 새로고침 후 다시 시도하세요.");
-    }
-}
-
-    // 4. 기록 불러오기
-    function loadChatHistory() {
-    fetch('/chat/history')
-        .then(res => res.json())
-        .then(data => {
-        	console.log("★★★★ [기록 불러오기] 데이터 개수:", data.length); // 로그 추가
+        // 핵심: JSON 데이터를 파싱해서 화면에 예쁘게 출력
+        socket.onmessage = function(event) {
+            let data = JSON.parse(event.data); // JSON 해석
             let msgBox = document.getElementById('chat-messages');
             
-            // 핵심: 기존에 화면에 떠 있던 내용을 무조건 깨끗하게 비웁니다.
-            msgBox.innerHTML = ""; 
+            let div = document.createElement('div');
+            // 백틱(`)을 사용하여 데이터를 조합
+            div.textContent = "[" + data.position + "] " + data.userName + ": " + data.message;
             
-            data.forEach(item => {
-                let pos = item.position ? "[" + item.position + "] " : "";
-                let displayMsg = pos + item.user_name + ": " + item.message;
-                
-                let div = document.createElement('div');
-                div.textContent = displayMsg;
-                msgBox.appendChild(div);
-            });
+            msgBox.appendChild(div);
             msgBox.scrollTop = msgBox.scrollHeight;
-        })
-        .catch(err => console.error("기록 불러오기 실패:", err));
-}
+        };
 
-    // 5. 닫기
+        socket.onclose = function() { socket = null; };
+        socket.onerror = function(err) { console.error("웹소켓 에러:", err); };
+    }
+
+    // 3. 채팅창 열기
+    async function checkLoginAndOpenChat() {
+        const isLogin = <%= (loginMember != null) %>; 
+        if (!isLogin) {
+            alert("로그인 후 이용 가능합니다.");
+            location.href = "/login";
+            return;
+        }
+
+        var chatWindow = document.getElementById('chat-window');
+        if (chatWindow.style.display === 'flex') return; 
+
+        chatWindow.style.display = 'flex';
+        
+        if (socket === null || socket.readyState !== WebSocket.OPEN) {
+            await loadChatHistory();
+            connectWebSocket();
+        }
+    }
+
+    // 4. 메시지 전송
+    function sendMessage() {
+        let input = document.getElementById('chat-input');
+        let message = input.value.trim();
+        if(message === "") return;
+        
+        if (socket && socket.readyState === WebSocket.OPEN) {
+            socket.send(message); 
+            input.value = ""; 
+        } else {
+            alert("서버 연결이 끊겼습니다.");
+        }
+    }
+
+    // 5. 기록 불러오기
+    function loadChatHistory() {
+        fetch('/chat/history')
+            .then(res => res.json())
+            .then(data => {
+                let msgBox = document.getElementById('chat-messages');
+                msgBox.innerHTML = ""; 
+                data.forEach(item => {
+                    let div = document.createElement('div');
+                    div.textContent = "[" + item.position + "] " + item.user_name + ": " + item.message;
+                    msgBox.appendChild(div);
+                });
+                msgBox.scrollTop = msgBox.scrollHeight;
+            })
+            .catch(err => console.error("기록 불러오기 실패:", err));
+    }
+
     function closeChat() {
         document.getElementById('chat-window').style.display = 'none';
     }
-   
 </script>
 <header class="main-header-container">
 	<div class="header-main-content">

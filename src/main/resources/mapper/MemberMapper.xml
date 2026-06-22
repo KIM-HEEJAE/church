@@ -42,14 +42,25 @@ SELECT * FROM MEMBER WHERE USER_ID=#{user_id} AND USER_PWD=#{user_pwd}
     SELECT * FROM MEMBER WHERE USER_ID = #{user_id}
     </select>
     <update id="updateMember" parameterType="com.church.homepage.dto.MemberDTO">
-    UPDATE MEMBER SET 
-        USER_NAME = #{user_name, jdbcType=VARCHAR}, 
-        USER_PWD = #{user_pwd, jdbcType=VARCHAR},
-        EMAIL = #{email, jdbcType=VARCHAR}
-        <if test="img != null and img != ''">
-            , IMG = #{img, jdbcType=VARCHAR}
+    UPDATE MEMBER
+    <set>
+        <if test="user_name != null and user_name != ''">
+            USER_NAME = #{user_name},
         </if>
-    WHERE USER_ID = #{user_id, jdbcType=VARCHAR}
+        <if test="user_pwd != null and user_pwd != ''">
+            USER_PWD = #{user_pwd},
+        </if>
+        <if test="email != null and email != ''">
+            EMAIL = #{email},
+        </if>
+        <if test="img != null and img != ''">
+            IMG = #{img},
+        </if>
+        <if test="birth_date != null and birth_date != ''">
+            BIRTH_DATE = #{birth_date},
+        </if>
+    </set>
+    WHERE USER_ID = #{user_id}
 </update>
 <update id="updateImg">
     UPDATE MEMBER 

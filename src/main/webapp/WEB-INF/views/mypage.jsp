@@ -1,34 +1,55 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+	
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="EUC-KR">
+<meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/css/style.css">
 
 <body>
-<jsp:include page="header.jsp" />
-<div class="mypage-container" style="padding: 20px;">
+	<jsp:include page="header.jsp" />
+	<div class="mypage-card">
     <div class="profile-img">
         <c:choose>
             <c:when test="${not empty dto.img}">
-                <img src="/work/img/${dto.img}" width="150" height="150" style="border-radius: 50%; border: 1px solid #ccc;">
+                <img src="/work/img/${dto.img}" width="150" height="150" style="border-radius: 50%; border: 3px solid #f0f0f0;">
             </c:when>
-
+            <c:otherwise>
+                <div style="width:150px; height:150px; background:#eee; border-radius:50%; margin: 0 auto; display:flex; align-items:center; justify-content:center;">ì´ë¯¸ì§€ ì—†ìŒ</div>
+            </c:otherwise>
         </c:choose>
     </div>
 
-    <form action="/updateProfile" method="post" enctype="multipart/form-data" style="margin-top: 20px;">
-        <p>¾ÆÀÌµð: <input type="text" name="user_id" value="${dto.user_id}"></p>
-        <p>ºñ¹Ð¹øÈ£: <input type="password" name="user_pwd" value="${dto.user_pwd}"> </p>
-        <p>ÀÌ¸§: <input type="text" name="user_name" value="${dto.user_name}"></p>
-        <p>ÀÌ¸ÞÀÏ: <input type="email" name="email" value="${dto.email}"></p>
-        <p>»ý³â¿ùÀÏ: <input type="date" name="birth_date" value="${dto.birth_date}" readonly></p>        
-        <p>ÇÁ·ÎÇÊ »çÁø º¯°æ: <input type="file" name="file"></p>
-        <button type="submit">Á¤º¸ ¹× »çÁø ¼öÁ¤ÇÏ±â</button>
+    <form action="/updateProfile" method="post" enctype="multipart/form-data">
+        <div class="form-group">
+            <label>ì•„ì´ë””</label>
+            <input type="text" name="user_id" value="${dto.user_id}" readonly>
+        </div>
+        <div class="form-group">
+            <label>ì´ë¦„</label>
+            <input type="text" name="user_name" value="${dto.user_name}">
+        </div>
+        <div class="form-group">
+            <label>ì´ë©”ì¼</label>
+            <input type="email" name="email" value="${dto.email}">
+        </div>
+        <div class="form-group">
+            <label>ë¹„ë°€ë²ˆí˜¸ ë³€ê²½</label>
+            <input type="password" name="user_pwd" placeholder="ë¹„ë°€ë²ˆí˜¸ë¥¼ ìž…ë ¥í•˜ì„¸ìš”">
+        </div>
+        <div class="form-group">
+            <label>í”„ë¡œí•„ ì‚¬ì§„</label>
+            <input type="file" name="file">
+        </div>
+        
+        <button type="submit" class="btn-submit">ì •ë³´ ìˆ˜ì •í•˜ê¸°</button>
     </form>
 </div>
+	
 </body>
 </html>
