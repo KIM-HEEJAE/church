@@ -48,4 +48,9 @@
     <delete id="deleteBoard" parameterType="int">
         DELETE FROM FILEBOARD WHERE ID = #{id}
     </delete>
+    <update id="updateBoard" parameterType="com.church.homepage.dto.FileBoardDTO">
+        UPDATE FILEBOARD 
+        SET TITLE = #{title} 
+        WHERE ID = #{id}
+    </update>
 </mapper>

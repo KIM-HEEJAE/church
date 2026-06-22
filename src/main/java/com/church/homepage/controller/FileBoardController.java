@@ -3,7 +3,6 @@ package com.church.homepage.controller;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,63 +21,102 @@ import page.PageUtil;
 @Controller
 public class FileBoardController {
 
-    @Autowired
-    FileBoardService service;
-    
-    // 파일 저장 경로 (운영체제에 맞게 설정)
-    private final String UPLOAD_PATH = "C:/work/uploads/";
+	@Autowired
+	FileBoardService service;
 
-    // 1. 게시글 목록 페이지
-    @GetMapping("/file/list")
-    public String list(@RequestParam(defaultValue="1") int curPage, Model model) {
-        int count = service.getTotalCount();
-        PageUtil pageUtil = new PageUtil(count, curPage);
-        
-        // 이제 썸네일 처리 없이 리스트만 가져옴
-        List<FileBoardDTO> list = service.getFblist(pageUtil);
-        
-        model.addAttribute("boardList", list);
-        model.addAttribute("page", pageUtil);
-        return "file/file_list";
-    }
-    // 2. 글 작성 페이지 이동
-    @GetMapping("/file/write")
-    public String writeForm() {
-        return "file/write_form";
-    }
+	// 파일 저장 경로 (운영체제에 맞게 설정)
+	private final String UPLOAD_PATH = "C:/work/uploads/";
 
-    // 3. 글 작성 처리 (파일 업로드 포함)
-    @PostMapping("/file/write")
-    public String write(FileBoardDTO dto, @RequestParam("files") MultipartFile[] files) throws Exception {
-        List<String> fileNames = new ArrayList<>();
+	// 1. 게시글 목록 페이지
+	@GetMapping("/file/list")
+	public String list(@RequestParam(defaultValue = "1") int curPage, Model model) {
+		int count = service.getTotalCount();
+		PageUtil pageUtil = new PageUtil(count, curPage);
 
-        for (MultipartFile file : files) {
-            if (file != null && !file.isEmpty()) {
-                String originalName = file.getOriginalFilename();
-                String extension = originalName.substring(originalName.lastIndexOf("."));
-                // UUID를 사용하여 파일명 중복 방지 및 인코딩 문제 해결
-                String fileName = UUID.randomUUID().toString() + extension; 
-                
-                File saveFile = new File(UPLOAD_PATH, fileName);
-                file.transferTo(saveFile);
-                fileNames.add(fileName);
-            }
-        }
-        service.save(dto, fileNames);
-        return "redirect:/file/list";
-    }
+		// 이제 썸네일 처리 없이 리스트만 가져옴
+		List<FileBoardDTO> list = service.getFblist(pageUtil);
 
-    // 4. 게시글 상세 보기 (이미지 목록 포함)
-    @GetMapping("/file/detail")
-    public String detail(@RequestParam("id") int id, Model model) {
-    	// 1. 게시글 상세 정보와 이미지 리스트를 서비스에서 가져옴
-        FileBoardDTO dto = service.detail(id);
-        
-        // 2. 모델에 담아서 JSP로 전달
-        model.addAttribute("board", dto);
-        
-        return "file/file_detail"; // file_detail.jsp로 이동
-    }
+		model.addAttribute("boardList", list);
+		model.addAttribute("page", pageUtil);
+		return "file/file_list";
+	}
 
- 
+	// 2. 글 작성 페이지 이동
+	@GetMapping("/file/write")
+	public String writeForm() {
+		return "file/write_form";
+	}
+
+	// 3. 글 작성 처리 (파일 업로드 포함)
+	@PostMapping("/file/write")
+	public String write(FileBoardDTO dto, @RequestParam("files") MultipartFile[] files) throws Exception {
+		List<String> fileNames = new ArrayList<>();
+
+		for (MultipartFile file : files) {
+			if (file != null && !file.isEmpty()) {
+				String originalName = file.getOriginalFilename();
+				String extension = originalName.substring(originalName.lastIndexOf("."));
+				// UUID를 사용하여 파일명 중복 방지 및 인코딩 문제 해결
+				String fileName = UUID.randomUUID().toString() + extension;
+
+				File saveFile = new File(UPLOAD_PATH, fileName);
+				file.transferTo(saveFile);
+				fileNames.add(fileName);
+			}
+		}
+		service.save(dto, fileNames);
+		return "redirect:/file/list";
+	}
+
+	// 4. 게시글 상세 보기 (이미지 목록 포함)
+	@GetMapping("/file/detail")
+	public String detail(@RequestParam("id") int id, Model model) {
+		// 1. 게시글 상세 정보와 이미지 리스트를 서비스에서 가져옴
+		FileBoardDTO dto = service.detail(id);
+
+		// 2. 모델에 담아서 JSP로 전달
+		model.addAttribute("board", dto);
+
+		return "file/file_detail"; // file_detail.jsp로 이동
+	}
+
+	@GetMapping("/file/delete")
+	public String delete(@RequestParam("id") int id) {
+		service.remove(id); // 서비스에서 삭제 로직 수행
+		return "redirect:/file/list";
+	}
+
+	// 6. 수정 페이지 이동
+	@GetMapping("/file/update")
+	public String updateForm(@RequestParam("id") int id, Model model) {
+		model.addAttribute("board", service.detail(id));
+		return "file/update_form"; // 수정 폼 JSP 필요
+	}
+
+	// 7. 수정 처리
+	// FileBoardController.java
+	@PostMapping("/file/update")
+	public String update(FileBoardDTO dto, @RequestParam("files") MultipartFile[] files) throws Exception {
+	    List<String> fileNames = new ArrayList<>();
+
+	    // 1. 새 파일 업로드 처리
+	    if (files != null && files.length > 0 && !files[0].isEmpty()) {
+	        for (MultipartFile file : files) {
+	            String originalName = file.getOriginalFilename();
+	            String extension = originalName.substring(originalName.lastIndexOf("."));
+	            String fileName = UUID.randomUUID().toString() + extension;
+	            
+	            File saveFile = new File(UPLOAD_PATH, fileName);
+	            file.transferTo(saveFile);
+	            fileNames.add(fileName);
+	        }
+	    }
+	    
+	    // 2. 서비스 호출 (이제 파라미터가 2개인 메서드를 호출하므로 빨간줄이 사라집니다)
+	    // 파일이 없어도 fileNames는 빈 리스트이므로 서비스에서 null 체크를 하거나 isEmpty() 체크를 하면 됩니다.
+	    service.update(dto, fileNames); 
+	    
+	    return "redirect:/file/detail?id=" + dto.getId();
+	}
+
 }

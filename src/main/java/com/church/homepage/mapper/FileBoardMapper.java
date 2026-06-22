@@ -30,4 +30,10 @@ public interface FileBoardMapper {
 	List<FileBoardDTO> getFblist(PageUtil pageUtil);
 
 	FileBoardDTO viewBoard(int id);
+
+	void deleteImages(int id);
+
+	void deleteBoard(int id);
+
+	void updateBoard(FileBoardDTO dto);
 }

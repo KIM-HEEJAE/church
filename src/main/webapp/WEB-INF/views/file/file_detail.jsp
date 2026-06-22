@@ -21,7 +21,16 @@
 			<br>
 		</c:forEach>
 	</div>
-
-	<a href="/file/list">목록으로</a>
+	
+	<div class="btn-group" style="margin-top: 20px;">
+    <a href="/file/list" class="btn btn-list">목록으로</a>
+    
+    <c:if test="${not empty sessionScope.member && sessionScope.member.user_id == 'admin'}">
+        <a href="/file/update?id=${board.id}" class="btn btn-edit">수정</a>
+        <a href="javascript:void(0);" 
+           onclick="if(confirm('정말 삭제하시겠습니까?')) location.href='/file/delete?id=${board.id}'" 
+           class="btn btn-delete">삭제</a>
+    </c:if>
+</div>
 </body>
 </html>

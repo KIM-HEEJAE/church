@@ -1,8 +1,6 @@
 package com.church.homepage.service;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -59,4 +57,28 @@ public class FileBoardService {
 	    
 	    return dto;
 	}
+	@Transactional
+    public void remove(int id) {
+        // 1. 먼저 이미지 정보 삭제
+        mapper.deleteImages(id);
+        // 2. 게시글 삭제
+        mapper.deleteBoard(id);
+    }
+	@Transactional
+    public void update(FileBoardDTO dto, List<String> fileNames) {
+        mapper.updateBoard(dto);
+        if (fileNames != null && !fileNames.isEmpty()) {
+            // (선택사항) 물리적인 실제 파일 삭제 로직 추가 가능:
+            // List<String> oldFiles = mapper.getImagesByBno(dto.getId());
+            // for(String f : oldFiles) { new File(UPLOAD_PATH + f).delete(); }
+            
+            // 3. 기존 이미지 DB 데이터 삭제
+            mapper.deleteImages(dto.getId());
+            
+            // 4. 새 이미지 DB 데이터 삽입
+            for(String fileName : fileNames) {
+                mapper.insertBoardImg(dto.getId(), fileName);
+            }
+        }
+    }
 }
