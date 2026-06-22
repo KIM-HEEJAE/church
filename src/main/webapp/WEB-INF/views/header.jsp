@@ -160,10 +160,10 @@
 		<nav class="navbar-container">
 			<ul class="nav-menu">
 				<!-- 1. 교회소개 대메뉴 클릭 시 -> /intro/greeting(담임목사인사말)로 변경 -->
-				<li class="dropdown-item"><a href="/intro/greeting">교회소개</a>
+				<li class="dropdown-item"><a href="/intro/hi">교회소개</a>
 					<ul class="submenu">
 						<li><a href="/intro/hi">담임목사인사말</a></li>
-						<li><a href="/intro/	time">예배시간</a></li>
+						<li><a href="/intro/time">예배시간</a></li>
 						<li><a href="/intro/people">섬기는분들</a></li>
 						<li><a href="/intro/history">교회연혁</a></li>
 						<li><a href="/intro/guide">교회시설안내</a></li>
