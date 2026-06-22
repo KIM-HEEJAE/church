@@ -1,28 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-
 <mapper namespace="com.church.homepage.mapper.FileBoardMapper">
 
-    <select id="selectAll" resultType="com.church.homepage.dto.FileBoardDTO">
-        SELECT * FROM fileboard ORDER BY id DESC
+    <resultMap id="fileBoardResultMap" type="com.church.homepage.dto.FileBoardDTO">
+        <result property="id" column="id"/>
+        <result property="title" column="title"/>
+        <result property="regDate" column="reg_date"/>
+    </resultMap>
+
+    <select id="getFblist" resultMap="fileBoardResultMap" parameterType="page.PageUtil">
+        SELECT * FROM (
+            SELECT ROWNUM AS RNUM, B.* FROM (
+                SELECT * FROM FILEBOARD ORDER BY ID DESC
+            ) B
+        ) WHERE RNUM BETWEEN #{pageBegin} AND #{pageEnd}
     </select>
 
-    <select id="selectOne" parameterType="int" resultType="com.church.homepage.dto.FileBoardDTO">
-        SELECT * FROM fileboard WHERE id = #{id}
+    <select id="getTotalCount" resultType="int">
+        SELECT COUNT(*) FROM FILEBOARD
+    </select>
+
+    <select id="viewBoard" parameterType="int" resultType="com.church.homepage.dto.FileBoardDTO">
+        SELECT * FROM FILEBOARD WHERE ID = #{id}
     </select>
 
     <insert id="insertBoard" parameterType="com.church.homepage.dto.FileBoardDTO">
-    <selectKey keyProperty="id" resultType="int" order="BEFORE">
-        SELECT fileboard_seq.NEXTVAL FROM DUAL
-    </selectKey>
+        <selectKey keyProperty="id" resultType="int" order="BEFORE">
+            SELECT FILEBOARD_SEQ.NEXTVAL FROM DUAL
+        </selectKey>
+        INSERT INTO FILEBOARD (id, title, reg_date)
+        VALUES (#{id}, #{title}, SYSDATE)
+    </insert>
 
-    INSERT INTO fileboard (id, title, reg_date) 
-    VALUES (#{id}, #{title}, SYSDATE)
-</insert>
+    <insert id="insertBoardImg" parameterType="map">
+        INSERT INTO FILEBOARD_IMG (fbimg_no, fb_no, fbimg_name) 
+        VALUES (FILEBOARD_IMG_SEQ.NEXTVAL, #{fbNo}, #{fileName})
+    </insert>
 
-<insert id="insertBoardImg">
-    INSERT INTO fileboard_img (fbimg_no, fb_no, fbimg_name)
-    VALUES (fileboard_img_seq.NEXTVAL, #{fb_no}, #{fbimg_name})
-</insert>
+    <select id="getImagesByBno" resultType="String">
+        SELECT fbimg_name FROM FILEBOARD_IMG WHERE fb_no = #{id}
+    </select>
 
+    <delete id="deleteImages" parameterType="int">
+        DELETE FROM FILEBOARD_IMG WHERE FB_NO = #{id}
+    </delete>
+
+    <delete id="deleteBoard" parameterType="int">
+        DELETE FROM FILEBOARD WHERE ID = #{id}
+    </delete>
 </mapper>

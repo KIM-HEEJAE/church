@@ -16,5 +16,8 @@ public class WebConfig implements WebMvcConfigurer {
 	    // 2. 새로운 방식 (게시판용)
 	    registry.addResourceHandler("/img/**")
 	            .addResourceLocations("file:///C:/work/img/");
+	    //3. 주보 게시판
+	    registry.addResourceHandler("/files/**")
+        .addResourceLocations("file:///C:/work/uploads/");
 	}
 }

@@ -75,13 +75,13 @@ private BoardService boardService;
     @GetMapping("/mypage")
     public String mypage(HttpSession session ,Model model) {
     	MemberDTO dto = (MemberDTO) session.getAttribute("member");
+    	
     	if (dto==null) {
     		return "redirect:/login";	
     	}
     	String user_id = dto.getUser_id();
     	MemberDTO memberInfo =memberService.getMemberInfo(user_id);
     	model.addAttribute("dto",memberInfo);
-    	System.out.println(memberInfo);
     	return "mypage";
     }
     @PostMapping("/updateProfile")
