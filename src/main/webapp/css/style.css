@@ -426,7 +426,16 @@ button:hover { background-color: #0056b3; }
     border-radius: 8px;
     box-sizing: border-box; /* 패딩 포함 크기 설정 */
 }
-
+.form-group textarea {
+    width: 100%;
+    /* 기존 300px에서 500px로 늘리거나, 화면의 60% 높이로 설정 */
+    min-height: 250px; 
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    resize: vertical; /* 사용자가 마우스로 크기 조절 가능 */
+}
 /* 버튼 스타일 */
 .btn-submit {
     width: 100%;
@@ -444,7 +453,36 @@ button:hover { background-color: #0056b3; }
 .btn-list { background-color: #6c757d; } /* 목록: 회색 */
 .btn-edit { background-color: #007bff; } /* 수정: 파란색 */
 .btn-delete { background-color: #dc3545; } /* 삭제: 빨간색 */
+.btn-write {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #2c3e50; /* 버튼 배경색 (예: 진한 남색) */
+    color: #ffffff !important; /* 글자색 */
+    text-decoration: none;     /* 밑줄 제거 */
+    border-radius: 5px;        /* 둥근 모서리 */
+    font-weight: bold;
+    transition: background-color 0.3s; /* 마우스 올렸을 때 부드러운 색 변화 */
+}
 
+/* 마우스를 올렸을 때의 효과 */
+.btn-write:hover {
+    background-color: #34495e; /* 마우스 올렸을 때 조금 더 밝아짐 */
+    color: #ffffff;
+}
+.file-list-box {
+    background-color: #f1f3f5;
+    padding: 10px;
+    border-radius: 4px;
+    margin-bottom: 15px;
+    border: 1px solid #dee2e6;
+}
+
+.file-item {
+    display: block;
+    padding: 3px 0;
+    color: #495057;
+    font-size: 0.9em;
+}
 /* 마우스를 올렸을 때 어두워지는 효과 (선택사항) */
 .btn:hover { opacity: 0.8; }
 @media (max-width: 480px) {

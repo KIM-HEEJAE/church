@@ -3,6 +3,7 @@
 <%@ page import="com.church.homepage.dto.MemberDTO"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <link rel="stylesheet" href="/css/style.css">
+
 <div class="top-util-bar">
 	<div class="util-menu">
 		<%
@@ -22,9 +23,9 @@
 		<%
 		}
 		%>
-		<a href="/mypage" class="mypage">마이페이지</a> <a
-			href="javascript:void(0);" onclick="checkLoginAndOpenChat()">채팅</a> <a
-			href="#none">카페</a> <a href="#none">일정</a>
+		<a href="/mypage" class="mypage">마이페이지</a> 
+		<a href="javascript:void(0);" onclick="checkLoginAndOpenChat()">채팅</a> 
+			
 	</div>
 </div>
 <script>
@@ -69,7 +70,7 @@
 
     // 3. 채팅창 열기
     async function checkLoginAndOpenChat() {
-        const isLogin = <%= (loginMember != null) %>; 
+        const isLogin = <%=(loginMember != null)%>; 
         if (!isLogin) {
             alert("로그인 후 이용 가능합니다.");
             location.href = "/login";
@@ -136,7 +137,6 @@
 
 		<nav class="navbar-container">
 			<ul class="nav-menu">
-				<!-- 1. 교회소개 대메뉴 클릭 시 -> /intro/greeting(담임목사인사말)로 변경 -->
 				<li class="dropdown-item"><a href="/intro/hi">교회소개</a>
 					<ul class="submenu">
 						<li><a href="/intro/hi">담임목사인사말</a></li>
@@ -146,18 +146,14 @@
 						<li><a href="/intro/guide">교회시설안내</a></li>
 						<li><a href="/intro/location">오시는길</a></li>
 					</ul></li>
-				<!-- 2. 말씀과찬양 대메뉴 클릭 시 -> /intro/time(주일설교)로 변경 -->
-				<li class="dropdown-item"><a href="/intro/time">말씀과찬양</a>
+				<li class="dropdown-item"><a href="/sermon/list">말씀과찬양</a>
 					<ul class="submenu">
 						<li><a href="/sermon/list">주일설교</a></li>
-						<li><a href="/intro/people">행사영상</a></li>
 					</ul></li>
-				<!-- 3. 선교회 대메뉴 클릭 시 -> /intro/sunkyo(선교회)로 변경 -->
 				<li class="dropdown-item"><a href="/intro/sunkyo">선교회</a>
 					<ul class="submenu">
 						<li><a href="/intro/sunkyo">선교회</a></li>
 					</ul></li>
-				<!-- 4. 교회학교 대메뉴 클릭 시 -> /intro/grade(유치부)로 변경 -->
 				<li class="dropdown-item"><a href="/intro/young">교회학교</a>
 					<ul class="submenu">
 						<li><a href="/intro/young">유치부</a></li>
@@ -165,20 +161,15 @@
 						<li><a href="/intro/student">학생부</a></li>
 						<li><a href="/intro/adult">청년부</a></li>
 					</ul></li>
-				<!-- 5. 찬양대 대메뉴 클릭 시 -> /intro/choir(찬양대 안내)로 변경 -->
 				<li class="dropdown-item"><a href="/choir">찬양대</a>
 					<ul class="submenu">
 						<li><a href="/choir">찬양대 안내</a></li>
-						<!--                         <li><a href="/intro/grade">글로리아 성가대</a></li>
-                        <li><a href="/intro/grade">할렐루야 성가대</a></li>
-                        <li><a href="/intro/grade">늘찬양 성가대</a></li>    -->
+
 					</ul></li>
-				<!-- 6. 교회앨범 대메뉴 클릭 시 -> /intro/album(교회 앨범)로 변경 -->
 				<li class="dropdown-item"><a href="/board/list">교회앨범</a>
 					<ul class="submenu">
 						<li><a href="/board/list">교회 앨범</a></li>
 					</ul></li>
-				<!-- 7. 교회소식 대메뉴 클릭 시 -> /intro/news(교회 소식)로 변경 -->
 				<li class="dropdown-item"><a href="/file/list">교회소식</a>
 					<ul class="submenu">
 						<li><a href="/file/list">교회 소식</a></li>
@@ -201,5 +192,6 @@
 		<button onclick="sendMessage()">전송</button>
 	</div>
 </div>
+
 </body>
 </html>

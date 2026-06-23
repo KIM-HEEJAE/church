@@ -24,4 +24,6 @@
     <button onclick="location.href='/sermon/list'">목록으로</button>
 </div>
 </body>
+   <jsp:include page="/WEB-INF/views/footer.jsp" />
+
 </html>

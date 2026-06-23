@@ -16,4 +16,6 @@
     <button type="submit">수정 완료</button>
 </form>
 </body>
+   <jsp:include page="/WEB-INF/views/footer.jsp" />
+
 </html>

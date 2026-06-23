@@ -234,24 +234,9 @@
         </table>
     </div>
 
-    <footer class="main-footer">
-        <div class="footer-content">
-            <div class="footer-left">
-                <div class="footer-info">
-                    <strong>홍제감리교회</strong>
-                    <span> | 서울특별시 서대문구 세무서길 28(홍제동)</span>
-                    <span>전화: 02-391-4560</span>
-                </div>
-                <p class="footer-copyright">
-                    Copyright © 2024 홍제감리교회. All right reserved. Powered by 웹치치.
-                </p>
-            </div>
-            <div class="footer-right">
-                <a href="#none">🔒 개인정보처리방침</a>
-                <a href="#none">이메일무단수집거부</a>
-            </div>
-        </div>
-    </footer>
+
 
 </body>
+   <jsp:include page="/WEB-INF/views/footer.jsp" />
+
 </html>
