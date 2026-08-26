@@ -1,56 +1,45 @@
-# ⛪ Church - 교회 성도 및 예배 관리 플랫폼
+⛪ Church Management System (교회 통합 관리 시스템)
+웹 기반의 통합 교회 관리 및 실시간 소통 플랫폼입니다. 관리자의 효율적인 운영과 성도 간의 원활한 소통을 지원하기 위해 개발되었습니다.
 
-Spring Boot 기반으로 구축된 교회 웹 플랫폼입니다. 회원 관리, 설교 게시판, 자유 게시판, 실시간 채팅 및 파일 공유 기능을 제공합니다.
+🛠️ Tech Stack
+Backend: Java 17, Spring Boot, MyBatis
 
----
+Frontend: HTML5, CSS3, JavaScript
 
-## 🛠 사용 기술 스택 (Tech Stack)
+Database: Oracle
 
-### Backend
-* **Java 17**
-* **Spring Boot 3.x**
-* **MyBatis**
-* **Spring Security** (BCrypt 비밀번호 암호화)
-* **JavaMailSender** (네이버 SMTP 이메일 인증)
+Build Tool: Maven
 
-### Database
-* **MySQL / Oracle**
+Version Control: GitHub
 
-### Frontend
-* **HTML5 / CSS3 / JavaScript**
-* **JSP / Thymeleaf**
+API & Protocol: WebSocket, Kakao Map API
 
----
+🚀 Key Features
+1. 실시간 채팅 시스템
+WebSocket과 커스텀 HandshakeInterceptor를 활용하여 HTTP 세션과 WebSocket 세션을 동기화했습니다.
 
-## ✨ 핵심 기능 (Key Features)
+별도의 복잡한 인증 절차를 거치지 않고도 실시간 접속자를 안전하게 식별할 수 있는 효율적인 채팅 로직을 구현했습니다.
 
-* **회원 관리**: 회원가입, 로그인, BCrypt 기반 암호화, 네이버 SMTP를 활용한 이메일 인증
-* **게시판 기능**: 일반 게시판, 자료실(파일 업로드/다운로드), 커뮤니티 기능
-* **설교 관리**: 주일 설교 및 영상/자료 게시판
-* **실시간 소통**: 성도 간 실시간 채팅 및 메시지 기능
+2. 관리자 콘텐츠 통합 관리
+주보 및 설교 영상 관리 기능에 CRUD를 구현했습니다.
 
----
+페이징(Paging) 처리를 도입하여 대용량 데이터 조회 시 발생하는 성능 저하를 방지했습니다.
 
-## 🔐 보안 및 환경설정 (Security & Configuration)
+관리자 전용 권한 제어를 통해 운영 데이터의 무결성을 유지합니다.
 
-민감한 설정 정보(DB 계정, 이메일 SMTP 앱 비밀번호 등)는 보안을 위해 `application-secret.properties`로 분리하여 관리하며, Git 추적에서 제외되어 있습니다.
+3. 인터셉터 기반 권한 제어 (RBAC)
+HandlerInterceptor를 활용해 요청 단계별 권한 체크 로직을 직접 구현했습니다.
 
-### 로컬 실행 방법
-1. 프로젝트를 클론합니다.
-   ```bash
-   git clone [https://github.com/KIM-HEEJAE/church.git](https://github.com/KIM-HEEJAE/church.git)
+비인가 사용자의 관리자 페이지 접근을 원천 차단하고 유연한 인증 아키텍처를 구축했습니다.
 
-2. src/main/resources/ 경로에 application-secret.properties 파일을 생성하고 아래 환경변수를 설정합니다.
-  spring.mail.username=본인이메일@naver.com
-  spring.mail.password=발급받은_앱_비밀번호
-3. 프로젝트를 빌드 및 실행합니다.
-   
+💡 Technical Highlights & Troubleshooting
+통신 규격 표준화: JSON 직렬화/역직렬화를 적용하여 서버와 클라이언트 간 통신 규격을 표준화하고, 데이터 타입 불일치 및 파싱 오류를 해결했습니다.
 
-**적용 및 Push 방법**
+데이터베이스 무결성 확보: DB 관계 재설계 및 Cascade 전략을 적용하여, 게시글 삭제 시 연관된 이미지 파일이 서버에 잔류하는 고아 데이터(Orphan Data) 문제를 해결하고 데이터 정합성을 높였습니다.
 
-1. 프로젝트 폴더(`C:/work/church/`)에 `README.md` 파일 저장
-2. 터미널에서 다음 명령어 실행:
-   ```bash
-   git add README.md
-   git commit -m "docs: README.md 추가"
-   git push origin main
+요청 생명주기 이해: 인터셉터 기반의 인증 로직을 직접 설계하며 웹 요청 생명주기와 보안 인증 흐름에 대한 깊은 이해를 얻었습니다.
+
+🔮 Future Improvements & Roadmap
+Spring AI 기반 지능형 서비스 도입: 공지사항 자동 요약 및 실시간 Q&A 챗봇 기능을 구현하여 사용자와 관리자의 업무 효율을 고도화할 예정입니다.
+
+Redis 기반 캐싱 최적화: 사용자 증가에 따른 시스템 병목 현상을 선제적으로 방지하기 위해, 자주 조회되는 게시글 목록이나 설정 정보 등에 Redis 캐싱 전략을 도입하여 데이터베이스 부하를 분산하고 응답 속도를 개선할 계획입니다.
